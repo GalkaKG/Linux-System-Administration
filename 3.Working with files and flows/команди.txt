@@ -1,0 +1,26 @@
+1.$ cp /etc/services services
+2.$ grep ^# services > services_comments.txt
+3.$ grep ^[^#] services > services_wo_comments.txt
+4.$ grep ^[^#] services | grep udp >  services_udp.txt
+5.$ vi services_wo_comments.txt
+6./socks
+7.dG
+8.:w well-known-ports.txt
+9.:q!
+10.$ head -n 100 well-known-ports.txt | tr / - > 100-well-known-ports.txt
+11.$ cat > doc1.txt << EOF
+     10-IT-HQ
+     20-Accounting-HQ
+     30-Help Desk-Remote
+     40-Sales-HQ
+     EOF
+12.$ cat > doc2.txt << EOF
+     10-B.Thomas
+     20-J.Foster
+     30-G.Smith
+     40-F.Hudson
+     EOF
+13.$ join -t '-' -j 1 doc1.txt doc2.txt > doc3.txt
+14.$ awk -F '-' '{print $3}' doc3.txt | sort -u > locations.txt
+15.$ awk -F '-' '{print $3}' doc3.txt | sort -u | wc -l > locations-count.txt
+16.$ sudo find /etc -type f -size -200c -exec ls -ld {} + | awk '{print $NF}' > small-etc-files.txt
