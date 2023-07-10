@@ -1,0 +1,31 @@
+1.$ time sudo tar -cJvf etc.tar.xz /etc && ls -alh etc.tar.xz
+2.$ time sudo tar -cjvf etc.tar.bzip /etc && ls -alh etc.tar.bzip
+3.$ time sudo tar -czvf etc.tar.gzip /etc && ls -alh etc.tar.gzip
+4.$ ls -alhS etc* | sort -n > compression-test.txt
+5.$ sudo gdisk /dev/sdb
+6.$ sudo mkdir -p /addon/{ext4,xfs,lvm}
+7.$ sudo mkfs.xfs -L VOLUME-XFS /dev/sdb1
+  $ sudo mount /dev/sdb1 /addon/xfs
+  $ sudo vi /etc/fstab
+   ''' /dev/sda1   /addon/xfs   xfs   defaults   0   0 '''
+8.$ sudo mkswap /dev/sdb2
+  $ sudo swapon /dev/sdb2
+  $ sudo vi /etc/fstab
+   ''' /dev/sda2   none   swap   sw   0   0 '''
+9.$ sudo mkfs.ext4 -L EXT4-VOLUME /dev/sdb3
+  $ sudo mount /dev/sdb3 /addon/ext4
+  $ sudo vi /etc/fstab
+   ''' /dev/sdb3  /addon/ext4  ext4 defaults  0  0 '''
+10.$ sudo pvcreate /dev/sdb4
+   $ sudo pvcreate /dev/sdb5
+   $ sudo pvcreate /dev/sdb6
+11.$ sudo vgcreate vg_addon /dev/sdb4 /dev/sdb5 /dev/sdb6
+12.$ sudo lvcreate -n lv_addon -L 400m vg_addon
+13.$ sudo mkfs.ext4 /dev/vg_addon/lv_addon
+$ sudo mkdir -p /addon/lvm
+$ sudo mount /dev/vg_addon/lv_addon /addon/lvm
+$ sudo vi /etc/fstab
+   ''' /dev/vg_addon/lv_addon   /addon/lvm   ext4   defaults   0   0 '''
+14.& 15.$ sudo lvextend -l +100%FREE /dev/vg_addon/lv_addon 
+15.$ sudo reboot
+   $ lsblk

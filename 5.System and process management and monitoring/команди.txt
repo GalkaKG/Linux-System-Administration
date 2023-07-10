@@ -13,8 +13,8 @@
 2.$ journalctl -k --no-pager --output=short-iso-precise --reverse > boot-extract.txt
 3.$ echo  After=network.target sshd-keygen.target > sshd-after.txt
 4.$ sudo pstree -p > processes-tree.txt
-5.$
+5.$ df -BGB > free-space.txt
 6.$ sudo du -h --max-depth=1 --exclude=/proc / | sort -hr > used-space.txt
-7.
-8.
+7.$ pidstat 5 5 > stat-output.txt
+8.$ sudo lsof +D /etc > open-files.txt; echo 'sudo lsof +D /etc > open-files.txt' >>open-files.txt
 9.$ sudo top -b -n 5 -d 5 > process-monitoring.txt
