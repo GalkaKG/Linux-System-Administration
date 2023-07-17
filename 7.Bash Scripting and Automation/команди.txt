@@ -35,7 +35,35 @@ while IFS= read -r line; do
 done < "$filename"
  
  $ ./show-data.sh /tmp/user-data.dat
-4.
-5.
-6.
-7.
+4.$  vi archiver.sh
+ 
+#!/bin/bash
+
+# Check if the script is executed with the correct number of parameters
+if [ $# -ne 2 ]; then
+  echo "Incorrect usage. Please provide two parameters."
+  echo "Usage: ./archiver.sh <folder_to_archive> <archive_name>"
+  exit 1
+fi
+
+folder_to_archive=$1
+archive_name=$2
+# Check if the folder exists
+if [ ! -d "$folder_to_archive" ]; then
+  echo "Folder $folder_to_archive does not exist."
+  exit 1
+fi
+
+# Check if the archive file already exists
+if [ -e "$archive_name" ]; then
+  echo "Archive file $archive_name already exists."
+  exit 1
+fi
+
+# Create the tar+gz archive
+tar czf "$archive_name" "$folder_to_archive"
+
+echo "Archive created successfully!"
+
+$ chmod +x archiver.sh
+$ ./archiver.sh 
