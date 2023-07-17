@@ -1,6 +1,40 @@
-1.
-2.
-3.
+1.$  vi user-data.sh
+
+#!/bin/bash
+#
+# Ask the user for first name
+read -p 'Enter your first name: ' USR_FIRST_NAME
+# Ask the user for last name
+read -p 'Enter your last name: ' USR_LAST_NAME
+# Ask the user for place of birth
+read -p 'Enter your place of birth: ' USR_PLACE_OF_BIRTH
+#
+# Append the collected data to a file /tmp/user-data.dat
+echo "$USR_FIRST_NAME;$USR_LAST_NAME;$USR_PLACE_OF_BIRTH" >> /tmp/user-data.dat
+
+ $ chmod +x user-data.sh
+2.$ ./user-data.sh  (2 more times)
+3.$ vi show-data.sh
+
+#!/bin/bash
+
+# Check if the script is executed with the correct number of parameters
+if [ $# -ne 1 ]; then
+  echo "Incorrect usage. Please provide the filename as a parameter."
+  echo "Usage: ./show-data.sh <filename>"
+  exit 1
+fi
+
+filename=$1
+
+# Read the file line by line using a for loop
+line_number=1
+while IFS= read -r line; do
+  echo "Row #$line_number: $line"
+  line_number=$((line_number+1))
+done < "$filename"
+ 
+ $ ./show-data.sh /tmp/user-data.dat
 4.
 5.
 6.
